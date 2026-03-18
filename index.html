@@ -3,340 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kele-arabe | تعلم اللغة العربية</title>
+    <title>kele-arabe | l'Arabe Facile</title>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&family=Amiri&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-color: #1b4332; /* Vert profond */
-            --accent-color: #d4a373;  /* Doré sable */
-            --bg-light: #f8f9fa;
+            --primary: #1b4332;
+            --accent: #d4a373;
+            --bg: #f8f9fa;
             --white: #ffffff;
-            --text-dark: #2d3436;
-            --shadow: 0 10px 30px rgba(0,0,0,0.1);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            background-color: var(--bg);
+            color: #2d3436;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        /* Header & Navigation */
+        /* Barre de navigation */
         header {
             background: var(--white);
-            padding: 1rem 5%;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 100;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        .logo span { color: var(--accent); }
 
-        .logo span { color: var(--accent-color); }
-
-        #installBtn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 500;
-            display: none; /* Caché par défaut */
-            transition: var(--transition);
-        }
-
-        #installBtn:hover {
-            background: var(--accent-color);
-            transform: scale(1.05);
-        }
-
-        /* Hero Section */
+        /* Hero */
         .hero {
             text-align: center;
-            padding: 60px 5%;
-            background: linear-gradient(135deg, var(--primary-color), #2d6a4f);
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary), #2d6a4f);
             color: white;
-            border-radius: 0 0 50px 50px;
-            margin-bottom: 40px;
+            border-radius: 0 0 40px 40px;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            font-family: 'Amiri', serif;
-        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
 
-        /* Levels Grid */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px 50px;
-        }
-
-        .levels-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
+        /* Grille de niveaux */
+        .levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
         .card {
-            background: var(--white);
-            border-radius: 25px;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            cursor: pointer;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
+            background: white; padding: 30px; border-radius: 20px; text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s;
         }
+        .card:hover { transform: translateY(-5px); }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-color);
+        /* Liste des PDF (Vue débutant) */
+        #beginner-view { display: none; }
+        .pdf-item {
+            background: white; margin-bottom: 10px; padding: 15px;
+            border-radius: 12px; display: flex; align-items: center; 
+            cursor: pointer; transition: 0.2s; border-right: 5px solid var(--accent);
         }
+        .pdf-item:hover { background: #e8f5e9; }
+        .pdf-icon { font-size: 1.5rem; margin-left: 15px; }
 
-        .card i {
-            font-size: 3rem;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-            display: block;
+        /* --- LECTEUR PDF (MODAL) --- */
+        #pdf-modal {
+            display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+            z-index: 2000;
         }
+        .modal-content {
+            position: relative; width: 95%; height: 90%; 
+            margin: 2% auto; background: white; border-radius: 10px; overflow: hidden;
+        }
+        .close-modal {
+            position: absolute; top: 10px; left: 10px;
+            background: red; color: white; border: none;
+            padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
+        iframe { width: 100%; height: 100%; border: none; }
 
-        .card h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .card p {
-            color: #636e72;
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-
-        .status-badge {
-            background: #dfe6e9;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* Beginner Section (PDF List) */
-        #beginner-view {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .back-nav {
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .pdf-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .pdf-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
-            color: var(--text-dark);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: var(--transition);
-        }
-
-        .pdf-card:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .pdf-icon {
-            font-size: 1.5rem;
-            background: #ffeaa7;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 1.8rem; }
-            header { padding: 1rem 20px; }
-            .card { padding: 30px 20px; }
-        }
+        .btn-back { margin-bottom: 20px; cursor: pointer; color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo">kele-<span>arabe</span></div>
-        <button id="installBtn">تثبيت التطبيق</button>
     </header>
 
     <main class="container">
         
-        <!-- Vue Principale -->
+        <!-- VUE ACCUEIL -->
         <div id="main-view">
             <section class="hero">
-                <h1>مرحباً بكم في كلي-عربي</h1>
-                <p>منصة تعلم اللغة العربية لغير الناطقين بها</p>
+                <h1>Apprenez l'Arabe</h1>
+                <p>Niveau Débutant : Livrets PDF inclus</p>
             </section>
 
-            <div class="levels-grid">
-                <!-- Débutant -->
-                <div class="card" onclick="openLevel('beginner')">
-                    <i>🌱</i>
-                    <h2>المبتدئين</h2>
-                    <p>تعلم الحروف والقواعد الأساسية من خلال الكتب التفاعلية</p>
-                    <span class="status-badge" style="background: #badc58;">متاح الآن</span>
+            <div class="levels">
+                <div class="card" onclick="showBeginner()">
+                    <span style="font-size:3rem">🌱</span>
+                    <h2>Débutants</h2>
+                    <p>Accéder aux livrets de cours</p>
                 </div>
-
-                <!-- Intermédiaire -->
-                <div class="card" style="opacity: 0.7; cursor: default;">
-                    <i>🌿</i>
-                    <h2>المتوسطين</h2>
-                    <p>تطوير مهارات القراءة والمحادثة اليومية</p>
-                    <span class="status-badge">قريباً</span>
-                </div>
-
-                <!-- Avancé -->
-                <div class="card" style="opacity: 0.7; cursor: default;">
-                    <i>🌳</i>
-                    <h2>المتقدمين</h2>
-                    <p>تحليل النصوص الأدبية والبلاغة العربية</p>
-                    <span class="status-badge">قريباً</span>
+                <div class="card" style="opacity:0.6; cursor:not-allowed">
+                    <span style="font-size:3rem">🌿</span>
+                    <h2>Intermédiaire</h2>
+                    <p>Bientôt disponible</p>
                 </div>
             </div>
         </div>
 
-        <!-- Vue Débutant (PDFs) -->
+        <!-- VUE LISTE PDF -->
         <div id="beginner-view">
-            <div class="back-nav" onclick="goBack()">
-                <span>⬅</span> العودة للرئيسية
+            <div class="btn-back" onclick="goHome()">← Retour à l'accueil</div>
+            <h2 style="margin-bottom:20px">Mes Livrets (PDF)</h2>
+            
+            <!-- LISTE DES LEÇONS -->
+            <div class="pdf-item" onclick="viewPDF('pdfs/livre1.pdf')">
+                <div class="pdf-icon">📕</div>
+                <div><strong>Leçon 1 :</strong> Introduction et Alphabet</div>
             </div>
-            
-            <h2 style="margin-bottom: 25px; color: var(--primary-color);">كتب المستوى الأول (PDF)</h2>
-            
-            <div class="pdf-list">
-                <!-- Liens vers vos PDFs GitHub -->
-                <a href="pdfs/lesson1.pdf" target="_blank" class="pdf-card">
-                    <div class="pdf-icon">📖</div>
-                    <div>
-                        <strong>الدرس الأول</strong>
-                        <div style="font-size: 0.8rem; opacity: 0.8;">الحروف الهجائية</div>
-                    </div>
-                </a>
 
-                <a href="pdfs/lesson2.pdf" target="_blank" class="pdf-card">
-                    <div class="pdf-icon">📖</div>
-                    <div>
-                        <strong>الدرس الثاني</strong>
-                        <div style="font-size: 0.8rem; opacity: 0.8;">التعارف والتحية</div>
-                    </div>
-                </a>
+            <div class="pdf-item" onclick="viewPDF('pdfs/livre2.pdf')">
+                <div class="pdf-icon">📘</div>
+                <div><strong>Leçon 2 :</strong> Salutations et Pronoms</div>
+            </div>
 
-                <a href="pdfs/lesson3.pdf" target="_blank" class="pdf-card">
-                    <div class="pdf-icon">📖</div>
-                    <div>
-                        <strong>الدرس الثالث</strong>
-                        <div style="font-size: 0.8rem; opacity: 0.8;">أسماء الإشارة</div>
-                    </div>
-                </a>
+            <div class="pdf-item" onclick="viewPDF('pdfs/livre3.pdf')">
+                <div class="pdf-icon">📗</div>
+                <div><strong>Leçon 3 :</strong> Vocabulaire de base</div>
             </div>
         </div>
 
     </main>
 
+    <!-- FENÊTRE DU LECTEUR PDF -->
+    <div id="pdf-modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePDF()">FERMER ✖</button>
+            <iframe id="pdf-frame" src=""></iframe>
+        </div>
+    </div>
+
     <script>
-        // Navigation simple
-        function openLevel(level) {
-            if(level === 'beginner') {
-                document.getElementById('main-view').style.display = 'none';
-                document.getElementById('beginner-view').style.display = 'block';
-                window.scrollTo(0,0);
-            }
+        function showBeginner() {
+            document.getElementById('main-view').style.display = 'none';
+            document.getElementById('beginner-view').style.display = 'block';
         }
 
-        function goBack() {
+        function goHome() {
             document.getElementById('main-view').style.display = 'block';
             document.getElementById('beginner-view').style.display = 'none';
         }
 
-        // --- Logique PWA ---
-        let deferredPrompt;
-        const installBtn = document.getElementById('installBtn');
+        // Fonction pour afficher le PDF dans la page
+        function viewPDF(fileUrl) {
+            const modal = document.getElementById('pdf-modal');
+            const frame = document.getElementById('pdf-frame');
+            
+            // Sur mobile, certains navigateurs bloquent l'affichage direct. 
+            // On utilise le lecteur Google Docs en secours pour garantir l'affichage
+            const viewerUrl = `https://docs.google.com/viewer?url=${window.location.origin}/${fileUrl}&embedded=true`;
+            
+            frame.src = fileUrl; // Essai direct
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Bloque le scroll derrière
+        }
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.style.display = 'block';
-        });
+        function closePDF() {
+            document.getElementById('pdf-modal').style.display = 'none';
+            document.getElementById('pdf-frame').src = "";
+            document.body.style.overflow = 'auto';
+        }
 
-        installBtn.addEventListener('click', () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        installBtn.style.display = 'none';
-                    }
-                    deferredPrompt = null;
-                });
-            }
-        });
-
-        // Enregistrement du Service Worker
+        // Service Worker pour PWA
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('SW Registered'))
-                    .catch(err => console.log('SW Error', err));
-            });
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>
