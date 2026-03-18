@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kele-arabe | تعلم اللغة العربية</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&family=Amiri&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #1b4332; /* Vert profond */
+            --accent-color: #d4a373;  /* Doré sable */
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --text-dark: #2d3436;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span { color: var(--accent-color); }
+
+        #installBtn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            display: none; /* Caché par défaut */
+            transition: var(--transition);
+        }
+
+        #installBtn:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 5%;
+            background: linear-gradient(135deg, var(--primary-color), #2d6a4f);
+            color: white;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-family: 'Amiri', serif;
+        }
+
+        /* Levels Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 50px;
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .card p {
+            color: #636e72;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            background: #dfe6e9;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Beginner Section (PDF List) */
+        #beginner-view {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-nav {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .pdf-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .pdf-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .pdf-card:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .pdf-icon {
+            font-size: 1.5rem;
+            background: #ffeaa7;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            header { padding: 1rem 20px; }
+            .card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">kele-<span>arabe</span></div>
+        <button id="installBtn">تثبيت التطبيق</button>
+    </header>
+
+    <main class="container">
+        
+        <!-- Vue Principale -->
+        <div id="main-view">
+            <section class="hero">
+                <h1>مرحباً بكم في كلي-عربي</h1>
+                <p>منصة تعلم اللغة العربية لغير الناطقين بها</p>
+            </section>
+
+            <div class="levels-grid">
+                <!-- Débutant -->
+                <div class="card" onclick="openLevel('beginner')">
+                    <i>🌱</i>
+                    <h2>المبتدئين</h2>
+                    <p>تعلم الحروف والقواعد الأساسية من خلال الكتب التفاعلية</p>
+                    <span class="status-badge" style="background: #badc58;">متاح الآن</span>
+                </div>
+
+                <!-- Intermédiaire -->
+                <div class="card" style="opacity: 0.7; cursor: default;">
+                    <i>🌿</i>
+                    <h2>المتوسطين</h2>
+                    <p>تطوير مهارات القراءة والمحادثة اليومية</p>
+                    <span class="status-badge">قريباً</span>
+                </div>
+
+                <!-- Avancé -->
+                <div class="card" style="opacity: 0.7; cursor: default;">
+                    <i>🌳</i>
+                    <h2>المتقدمين</h2>
+                    <p>تحليل النصوص الأدبية والبلاغة العربية</p>
+                    <span class="status-badge">قريباً</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vue Débutant (PDFs) -->
+        <div id="beginner-view">
+            <div class="back-nav" onclick="goBack()">
+                <span>⬅</span> العودة للرئيسية
+            </div>
+            
+            <h2 style="margin-bottom: 25px; color: var(--primary-color);">كتب المستوى الأول (PDF)</h2>
+            
+            <div class="pdf-list">
+                <!-- Liens vers vos PDFs GitHub -->
+                <a href="pdfs/lesson1.pdf" target="_blank" class="pdf-card">
+                    <div class="pdf-icon">📖</div>
+                    <div>
+                        <strong>الدرس الأول</strong>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">الحروف الهجائية</div>
+                    </div>
+                </a>
+
+                <a href="pdfs/lesson2.pdf" target="_blank" class="pdf-card">
+                    <div class="pdf-icon">📖</div>
+                    <div>
+                        <strong>الدرس الثاني</strong>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">التعارف والتحية</div>
+                    </div>
+                </a>
+
+                <a href="pdfs/lesson3.pdf" target="_blank" class="pdf-card">
+                    <div class="pdf-icon">📖</div>
+                    <div>
+                        <strong>الدرس الثالث</strong>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">أسماء الإشارة</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Navigation simple
+        function openLevel(level) {
+            if(level === 'beginner') {
+                document.getElementById('main-view').style.display = 'none';
+                document.getElementById('beginner-view').style.display = 'block';
+                window.scrollTo(0,0);
+            }
+        }
+
+        function goBack() {
+            document.getElementById('main-view').style.display = 'block';
+            document.getElementById('beginner-view').style.display = 'none';
+        }
+
+        // --- Logique PWA ---
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+
+        installBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        installBtn.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+
+        // Enregistrement du Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW Registered'))
+                    .catch(err => console.log('SW Error', err));
+            });
+        }
+    </script>
+</body>
+</html>
